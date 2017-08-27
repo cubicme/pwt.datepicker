@@ -89,7 +89,6 @@ class Model {
          */
         this.navigator = new Navigator(this);
 
-        let that = this;
         return new API(this);
     }
 }
