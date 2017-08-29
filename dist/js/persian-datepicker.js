@@ -2496,8 +2496,8 @@ var View = function () {
                 });
             } else {
                 this.$container.css({
-                    top: this.model.options.position[0] + inputPosition.left + 'px',
-                    left: this.model.options.position[1] + inputPosition.top + 'px'
+                    left: this.model.options.position[1] + inputPosition.left + 'px',
+                    top: this.model.options.position[0] + inputPosition.top + 'px'
                 });
             }
         }
