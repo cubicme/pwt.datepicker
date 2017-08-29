@@ -1661,10 +1661,8 @@ var Input = function () {
             if (inputValue && inputValue.match(persianDatePickerTimeRegex)) {
                 var timeArray = inputValue.split(':'),
                     tempDate = new Date();
-
                 tempDate.setHours(timeArray[0]);
                 tempDate.setMinutes(timeArray[1]);
-
                 if (timeArray[2]) {
                     tempDate.setSeconds(timeArray[2]);
                 } else {
