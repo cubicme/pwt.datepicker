@@ -1550,16 +1550,19 @@ var Input = function () {
         key: '_attachInputElementEvents',
         value: function _attachInputElementEvents() {
             var that = this;
+            var closePickerHandler = function closePickerHandler(e) {
+                if (!$(e.target).is(that.elem) && !$(e.target).is(that.model.view.$container) && $(e.target).closest('#' + that.model.view.$container.attr('id')).length == 0) {
+                    that.model.view.hide();
+                    $('body').unbind('click', closePickerHandler);
+                }
+            };
+
             $(this.elem).on('focus click', function () {
                 that.model.view.show();
+                if (that.model.state.ui.isInline === false) {
+                    $('body').bind('click', closePickerHandler);
+                }
             });
-            if (this.model.state.ui.isInline === false) {
-                $(document).on('click', function (e) {
-                    if (!$(e.target).closest(".datepicker-plot-area, .datepicker-plot-area > *, .pwt-datepicker-input-element").length) {
-                        that.model.view.hide();
-                    }
-                });
-            }
         }
 
         /**
