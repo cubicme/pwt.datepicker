@@ -358,14 +358,8 @@ function Model(inputElement, options) {
     this.input.update(unix);
   };
 
-  if (this.options.initialValue) {
-    this.state.setViewDateTime('unix', this.input.getOnInitState());
-    this.state.setSelectedDateTime('unix', this.input.getOnInitState());
-  } else {
-    var nowUnix = new Date().valueOf();
-    this.state.setViewDateTime('unix', nowUnix);
-    this.state.setSelectedDateTime('unix', nowUnix);
-  }
+  this.state.setViewDateTime('unix', this.input.getOnInitState());
+  this.state.setSelectedDateTime('unix', this.input.getOnInitState());
 
   /**
    * @desc handle navigation and dateoicker element events
@@ -1454,6 +1448,12 @@ var Input = function () {
         this.model = model;
 
         /**
+         * @type {boolean}
+         * @private
+         */
+        this._firstUpdate = true;
+
+        /**
          * @type {Element}
          */
         this.elem = inputElement;
@@ -1633,8 +1633,12 @@ var Input = function () {
     }, {
         key: 'update',
         value: function update(unix) {
-            this._updateInputField(unix);
-            this._updateAltField(unix);
+            if (this.model.options.initialValue == false && this._firstUpdate) {
+                this._firstUpdate = false;
+            } else {
+                this._updateInputField(unix);
+                this._updateAltField(unix);
+            }
         }
 
         /**

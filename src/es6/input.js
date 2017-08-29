@@ -18,6 +18,12 @@ class Input {
         this.model = model;
 
         /**
+         * @type {boolean}
+         * @private
+         */
+        this._firstUpdate = true;
+
+        /**
          * @type {Element}
          */
         this.elem = inputElement;
@@ -184,8 +190,13 @@ class Input {
      * @param unix
      */
     update (unix) {
-        this._updateInputField(unix);
-        this._updateAltField(unix);
+        if (this.model.options.initialValue == false && this._firstUpdate) {
+            this._firstUpdate = false;
+        } else {
+            this._updateInputField(unix);
+            this._updateAltField(unix);
+
+        }
     }
 
 
