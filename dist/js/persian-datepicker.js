@@ -1679,8 +1679,6 @@ var Input = function () {
                     this.initialUnix = new Date().valueOf();
                 }
             }
-
-            console.log(this.initialUnix);
             return this.initialUnix;
         }
     }]);
