@@ -194,20 +194,46 @@ class Input {
      * @return {Number} - unix
      */
     getOnInitState () {
-        let garegurianDate = null;
-        let $inputElem = $(this.elem);
+        const persianDatePickerTimeRegex = '^([0-1][0-9]|2[0-3]):([0-5][0-9])(?::([0-5][0-9]))?$'
+        let garegurianDate = null,
+          $inputElem = $(this.elem),
+          inputValue;
+
+        // Define input value by check inline mode and input mode
         if ($inputElem[0].nodeName === 'INPUT') {
-            garegurianDate = new Date($inputElem[0].getAttribute('value')).valueOf();
+            inputValue = $inputElem[0].getAttribute('value');
         }
         else {
-            garegurianDate = new Date($inputElem.data('date')).valueOf();
+            inputValue = $inputElem.data('date');
         }
-        if (garegurianDate && garegurianDate != 'undefined') {
-            this.initialUnix = garegurianDate;
+
+
+        // Check time string by regex
+        if (inputValue && inputValue.match(persianDatePickerTimeRegex)) {
+            let timeArray = inputValue.split(':'),
+              tempDate = new Date();
+
+            tempDate.setHours(timeArray[0]);
+            tempDate.setMinutes(timeArray[1]);
+
+            if (timeArray[2]) {
+                tempDate.setSeconds(timeArray[2]);
+            } else {
+                tempDate.setSeconds(0);
+            }
+            this.initialUnix = tempDate.valueOf();
         }
         else {
-            this.initialUnix = new Date().valueOf();
+            garegurianDate = new Date(inputValue).valueOf();
+            if (garegurianDate && garegurianDate != 'undefined') {
+                this.initialUnix = garegurianDate;
+            }
+            else {
+                this.initialUnix = new Date().valueOf();
+            }
         }
+
+        console.log(this.initialUnix);
         return this.initialUnix;
     }
 

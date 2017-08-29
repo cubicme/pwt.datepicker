@@ -17,7 +17,7 @@ class Model {
      * @param options
      * @private
      */
-    constructor(inputElement, options) {
+    constructor (inputElement, options) {
 
 
         /**
@@ -78,9 +78,13 @@ class Model {
             this.input.update(unix);
         };
 
-        this.state.setViewDateTime('unix', this.input.getOnInitState());
         if (this.options.initialValue) {
+            this.state.setViewDateTime('unix', this.input.getOnInitState());
             this.state.setSelectedDateTime('unix', this.input.getOnInitState());
+        } else {
+            const nowUnix = new Date().valueOf();
+            this.state.setViewDateTime('unix', nowUnix);
+            this.state.setSelectedDateTime('unix', nowUnix);
         }
 
         /**

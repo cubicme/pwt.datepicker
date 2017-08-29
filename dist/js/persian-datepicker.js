@@ -358,9 +358,13 @@ function Model(inputElement, options) {
     this.input.update(unix);
   };
 
-  this.state.setViewDateTime('unix', this.input.getOnInitState());
   if (this.options.initialValue) {
+    this.state.setViewDateTime('unix', this.input.getOnInitState());
     this.state.setSelectedDateTime('unix', this.input.getOnInitState());
+  } else {
+    var nowUnix = new Date().valueOf();
+    this.state.setViewDateTime('unix', nowUnix);
+    this.state.setSelectedDateTime('unix', nowUnix);
   }
 
   /**
@@ -1641,18 +1645,42 @@ var Input = function () {
     }, {
         key: 'getOnInitState',
         value: function getOnInitState() {
-            var garegurianDate = null;
-            var $inputElem = $(this.elem);
+            var persianDatePickerTimeRegex = '^([0-1][0-9]|2[0-3]):([0-5][0-9])(?::([0-5][0-9]))?$';
+            var garegurianDate = null,
+                $inputElem = $(this.elem),
+                inputValue = void 0;
+
+            // Define input value by check inline mode and input mode
             if ($inputElem[0].nodeName === 'INPUT') {
-                garegurianDate = new Date($inputElem[0].getAttribute('value')).valueOf();
+                inputValue = $inputElem[0].getAttribute('value');
             } else {
-                garegurianDate = new Date($inputElem.data('date')).valueOf();
+                inputValue = $inputElem.data('date');
             }
-            if (garegurianDate && garegurianDate != 'undefined') {
-                this.initialUnix = garegurianDate;
+
+            // Check time string by regex
+            if (inputValue && inputValue.match(persianDatePickerTimeRegex)) {
+                var timeArray = inputValue.split(':'),
+                    tempDate = new Date();
+
+                tempDate.setHours(timeArray[0]);
+                tempDate.setMinutes(timeArray[1]);
+
+                if (timeArray[2]) {
+                    tempDate.setSeconds(timeArray[2]);
+                } else {
+                    tempDate.setSeconds(0);
+                }
+                this.initialUnix = tempDate.valueOf();
             } else {
-                this.initialUnix = new Date().valueOf();
+                garegurianDate = new Date(inputValue).valueOf();
+                if (garegurianDate && garegurianDate != 'undefined') {
+                    this.initialUnix = garegurianDate;
+                } else {
+                    this.initialUnix = new Date().valueOf();
+                }
             }
+
+            console.log(this.initialUnix);
             return this.initialUnix;
         }
     }]);
