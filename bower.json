@@ -1,6 +1,6 @@
 {
   "name": "persian-datepicker",
-  "version": "0.5.5",
+  "version": "0.5.9",
   "main": [
     "dist/css/persian-datepicker.min.css",
     "dist/js/persian-datepicker.min.js"
@@ -40,4 +40,8 @@
     "dist"
   ],
   "description": "jQuery datepicker plugin work with Iranian calendar."
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master

@@ -119,13 +119,19 @@ class Input {
     _attachInputElementEvents () {
         let that = this;
         let closePickerHandler = function (e) {
+<<<<<<< HEAD
             console.log("closePickerHandler");
+=======
+>>>>>>> master
             if (!$(e.target).is(that.elem)
               && !$(e.target).is(that.model.view.$container)
               && $(e.target).closest('#' + that.model.view.$container.attr('id')).length == 0
               && !$(e.target).is($(that.elem).children())) {
                 that.model.view.hide();
+<<<<<<< HEAD
                 console.log("do close picker")
+=======
+>>>>>>> master
                 $('body').unbind('click', closePickerHandler);
             }
         };

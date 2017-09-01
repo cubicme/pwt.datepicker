@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+<<<<<<< HEAD
 ## [Unreleased]
+=======
+## [0.5.9]
+>>>>>>> master
 - fix #154 #153 #152 #151 #150 #148
 
 ## [0.5.5] 
