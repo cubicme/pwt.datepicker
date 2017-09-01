@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 =======
 /*
-** persian-datepicker - v0.5.9
+** persian-datepicker - v0.5.10
 ** Reza Babakhani <babakhani.reza@gmail.com>
 ** http://babakhani.github.io/PersianWebToolkit/docs/datepicker
 ** Under WTFPL license 
@@ -1772,10 +1772,12 @@ var Navigator = function () {
                     Hamster(timePlot).wheel(function (event, delta, deltaX, deltaY) {
                         var $target = $(event.target);
                         var key = $target.data('time-key') ? $target.data('time-key') : $target.parents('[data-time-key]').data('time-key');
-                        if (delta > 0) {
-                            that.timeUp(key);
-                        } else {
-                            that.timeDown(key);
+                        if (key) {
+                            if (delta > 0) {
+                                that.timeUp(key);
+                            } else {
+                                that.timeDown(key);
+                            }
                         }
                         event.preventDefault();
                     });
