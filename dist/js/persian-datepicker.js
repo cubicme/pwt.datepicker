@@ -1694,6 +1694,7 @@ var Input = function () {
     }, {
         key: 'getOnInitState',
         value: function getOnInitState() {
+            console('get on init state');
             var persianDatePickerTimeRegex = '^([0-1][0-9]|2[0-3]):([0-5][0-9])(?::([0-5][0-9]))?$';
             var garegurianDate = null,
                 $inputElem = $(this.elem),
@@ -1724,6 +1725,9 @@ var Input = function () {
                     var parse = new PersianDateParser();
                     var pd = new persianDate(parse.parse(inputValue)).valueOf();
                     garegurianDate = new Date(pd).valueOf();
+                } else if (this.model.options.initialValueType === 'unix' && inputValue) {
+                    console.log("USING NEW AWESOME UNIX FORMAT");
+                    garegurianDate = parseInt(inputValue);
                 } else if (inputValue) {
                     garegurianDate = new Date(inputValue).valueOf();
                 }
@@ -3643,7 +3647,7 @@ Hamster.normalise = {
           type: 'wheel',
           deltaMode: originalEvent.type === 'MozMousePixelScroll' ? 0 : 1,
           deltaX: 0,
-          delatZ: 0,
+          deltaZ: 0,
           preventDefault: function(){
             if (originalEvent.preventDefault) {
               originalEvent.preventDefault();

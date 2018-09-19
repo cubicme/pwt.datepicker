@@ -214,6 +214,7 @@ class Input {
      * @return {Number} - unix
      */
     getOnInitState() {
+        console('get on init state');
         const persianDatePickerTimeRegex = '^([0-1][0-9]|2[0-3]):([0-5][0-9])(?::([0-5][0-9]))?$';
         let garegurianDate = null,
             $inputElem = $(this.elem),
@@ -246,7 +247,10 @@ class Input {
                 let parse = new PersianDateParser();
                 let pd = new persianDate(parse.parse(inputValue)).valueOf();
                 garegurianDate = new Date(pd).valueOf();
-            } else if (inputValue) {
+            } else if ( this.model.options.initialValueType === 'unix' && inputValue ){
+                console.log("USING NEW AWESOME UNIX FORMAT");
+                garegurianDate = parseInt(inputValue);
+            } else if(inputValue) {
                 garegurianDate = new Date(inputValue).valueOf();
             }
 
